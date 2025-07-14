@@ -1,0 +1,91 @@
+------ Assumptions ------
+
+1. API Key Availability 
+   The user has valid API keys for both Google Gemini and Serper, and these are correctly set in the `.env` file.
+
+2. arXiv API Reliability 
+   The arXiv API is available and responsive. If not, the fallback to Serper is expected to provide relevant results.
+
+3. LLM Output Consistency 
+   The LLM (Google Gemini) will consistently return outputs in the expected format (e.g., JSON for summaries, float values for evaluations).
+
+4. Abstract Quality 
+   The abstracts retrieved from arXiv or Serper are of sufficient quality and length for meaningful summarization and evaluation.
+
+5. Limited Query Scope
+   The system is designed for academic research queries and may not perform well for non-academic or highly niche topics.
+
+6. Single-User Workflow  
+   The Streamlit app is intended for single-user, sequential use, not for concurrent multi-user scenarios.
+
+7. No Full-Text Access 
+   Only abstracts (not full papers) are used for summarization and evaluation, which may limit the depth of analysis.
+
+8. Error Handling  
+   Basic error handling is in place, but not all edge cases (e.g., malformed API responses) are exhaustively covered.
+
+---
+
+
+---- Areas of Improvement ----
+
+1. Full-Text Analysis 
+   - Current: Only abstracts are processed.  
+   - Improvement: Integrate PDF parsing (e.g., using [PyMuPDF](https://pymupdf.readthedocs.io/) or [Grobid](https://grobid.readthedocs.io/)) to analyze full papers for deeper insights.
+
+2. Enhanced Error Handling 
+   - Current: Errors are caught and displayed, but not always user-friendly.  
+   - Improvement: Implement more granular error messages, user guidance, and automatic retries for transient API failures.
+
+3. Multi-User Support
+   - Current: Designed for single-user sessions.  
+   - Improvement: Add session management or deploy as a web service with user authentication for collaborative research.
+
+4. Citation Extraction and Management
+   -  Current:  No explicit citation extraction.  
+   -  Improvement:  Extract and manage references/citations from papers, and include them in the final document.
+
+5.  Customizable Evaluation Criteria   
+   -  Current:  Fixed evaluation prompts (reliability, methodology, quality).  
+   -  Improvement:  Allow users to define or adjust evaluation criteria and weights.
+
+6.  UI/UX Enhancements   
+   -  Current:  Basic Streamlit interface.  
+   -  Improvement:  Add progress bars, paper previews, summary visualizations, and export options (PDF, DOCX).
+
+7.  Support for Additional Sources   
+   -  Current:  arXiv and Serper only.  
+   -  Improvement:  Integrate other academic databases (e.g., PubMed, Semantic Scholar, IEEE Xplore).
+
+8.  Language and Domain Adaptation   
+   -  Current:  English language, general academic topics.  
+   -  Improvement:  Add support for other languages and domain-specific summarization/evaluation.
+
+9.  LLM Output Validation   
+   -  Current:  Assumes LLM outputs are well-formed.  
+   -  Improvement:  Add output validation and correction steps (e.g., JSON schema validation, type checking).
+
+10.  Scalability and Performance   
+    -  Current:  Uses in-memory caching and rate limiting.  
+    -  Improvement:  Use distributed caching (e.g., Redis), asynchronous processing, and queueing for large-scale or batch queries.
+
+11.  Explainability and Transparency   
+    -  Current:  LLM decisions are not explained.  
+    -  Improvement:  Provide rationales or explanations for evaluations and synthesis steps.
+
+12.  Unlimited LLM API Access
+
+    The current design assumes access to LLM APIs (e.g., OpenAI, Gemini) with generous or unlimited token limits. In practice, API quotas, rate limits, and costs may restrict usage, especially for large-scale or batch processing.
+
+
+13. (IMP) Use of Specialized Language Models
+    Current: The system uses a general-purpose LLM (e.g., Gemini or OpenAI GPT) for all tasks.
+    Improvement: Evaluate and integrate specialized or domain-adapted models, such as SLMs (Small Language Models) or LLMs fine-tuned for academic or scientific research. This can improve the accuracy, relevance, and reliability of summaries, evaluations, and synthesized reports, especially for technical or domain-specific queries.
+
+14. Availability of High-Quality Information
+
+The system assumes that relevant, accurate, and up-to-date research information is available from sources like arXiv or web search APIs. If the information is missing or outdated, the quality of the output will be affected.
+---
+
+----- Summary: ------   
+The current architecture is robust for a proof-of-concept or MVP, but can be significantly enhanced for production, multi-user, or enterprise use by addressing the above areas.

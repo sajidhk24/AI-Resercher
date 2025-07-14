@@ -1,0 +1,93 @@
+Architecture
+
+Components:
+
+Paper Fetcher:
+
+Searches arXiv for relevant papers.
+Falls back to web search (Serper) if no papers are found.
+Summarizer:
+
+Summarizes each paper’s abstract into structured findings (summary, findings, themes, data, surprises, implications).
+Evaluator:
+
+Assesses each summary for reliability, methodology, and quality (scores 0-1).
+Synthesizer:
+
+Combines all summaries and evaluations into a single, concise report, highlighting findings and analysis.
+Document Drafter:
+
+Drafts a research document in IMRaD format based on the synthesized report.
+User Interface:
+
+Streamlit app for user input, displaying results, and downloading the final document.
+4. Workflow Breakdown
+
+User Input:
+
+User enters a research query.
+Paper Retrieval:
+
+The app searches arXiv for relevant papers.
+If no papers are found, it uses a web search as a fallback.
+Summarization:
+
+Each paper’s abstract is summarized into a structured format.
+Evaluation:
+
+Each summary is evaluated for reliability, methodology, and quality.
+Synthesis:
+
+All summaries and evaluations are synthesized into a single report, with findings and analysis.
+Document Drafting:
+
+The synthesized report is used to draft a research document in IMRaD format.
+Output:
+
+The app displays all results and allows the user to download the drafted document.
+5. Assumptions
+
+The user provides valid API keys for Gemini and Serper.
+arXiv and Serper APIs are accessible and responsive.
+The Gemini API is used for summarization, evaluation, synthesis, and drafting.
+Only abstracts are summarized, not full papers.
+All citations in the final document are marked as "Synthesized data".
+The user is responsible for reviewing and editing the final document for publication.
+6. Further Improvement Report
+
+Error Handling:
+Add more robust error handling for API failures, timeouts, and rate limits.
+
+Citation Enhancement:
+Support real citation formats (APA, MLA, etc.) and link to original sources.
+
+User Controls:
+Allow users to select the number of papers, filter by year, or choose specific sources.
+
+Caching:
+Implement caching for repeated queries to reduce API usage and speed up results.
+
+Evaluation Metrics:
+Expand evaluation to include factual accuracy, novelty, and relevance.
+
+Model Flexibility:
+Allow users to choose between different summarization and drafting models.
+
+UI Improvements:
+Add progress bars, better error messages, and more interactive features.
+
+Export Options:
+Support exporting to PDF, DOCX, or LaTeX formats.
+
+Feedback Loop:
+Allow users to rate summaries and drafts to improve future results.
+
+
+Modules and Functions:
+
+search_papers: Searches arXiv for papers; falls back to Serper web search if needed. Extracts titles, authors, abstracts, and URLs from responses.
+summarize: Uses Gemini API to create JSON summaries of abstracts, with fallbacks if parsing fails.
+evaluate: Uses Gemini API to score summaries for reliability, methodology, and quality, returning JSON or default values if parsing fails.
+synthesize: Combines summaries and evaluations into a report using Gemini, with fallbacks for empty responses.
+draft: Generates an academic paper from the report using Gemini, with fallbacks for empty responses.
+main: Runs the Streamlit app, chaining functions and displaying results with a download option
